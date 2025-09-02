@@ -55,5 +55,7 @@ const server = http.createServer((req, res) => {
         res.end("Not Found");
     }
 });
-
-server.listen(3000, () => console.log("Server running at http://localhost:3000"));
+const PORT = process.env.PORT || 3306;
+app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+});
