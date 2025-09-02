@@ -10,12 +10,16 @@ const db = mysql.createConnection({
     user: process.env.DB_USER,
     password: process.env.DB_PASS,
     database: process.env.DB_NAME,
-    port: process.env.DB_PORT || 3306
+    port: process.env.DB_PORT || 3306,
+    connectTimeout: 10000
 });
 
 db.connect(err => {
-    if (err) throw err;
-    console.log("MySQL Connected...");
+    if (err) {
+        console.error("DB Connection Failed:", err);
+    } else {
+        console.log("MySQL Connected...");
+    }
 });
 
 // HTTP server
@@ -55,7 +59,8 @@ const server = http.createServer((req, res) => {
         res.end("Not Found");
     }
 });
-const PORT = process.env.PORT || 3306;
-app.listen(PORT, () => {
+
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
